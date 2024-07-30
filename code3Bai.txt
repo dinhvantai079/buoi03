@@ -12,13 +12,19 @@ namespace ConsoleApplication1
         {
 
             //Bai 01
-            int n = 8;
-            
-            int sum = SumArrayIterative(n);
-            Console.WriteLine("Result: {0}", sum);
+            int n = 4;
+            int[] array = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                array[i] = i + 1;
+            }
 
-            sum = SumArrayRecursive(n);
-            Console.WriteLine("Result: {0}", sum);
+            int totalSum = SumArray(array, 0, n - 1);
+
+            Console.WriteLine("The sum of the arrays from 1 to " + n + " is: " + totalSum);
+
+
+
 
             //Bai 02
             int[] arr = { 5, 2, 4, 6, 1, 3 };
@@ -27,11 +33,11 @@ namespace ConsoleApplication1
             // Sắp xếp
             QuickSort(arr, 0, arr.Length - 1);
             Console.WriteLine("Array after: " + string.Join(", ", arr));
-            
+
 
             //Bai 03
             int index = BinarySearchRecursive(arr, 4, 0, arr.Length - 1);
-            
+
             Console.Write("Position of 4 is: ");
             Console.WriteLine(index); // Output:
 
@@ -118,26 +124,32 @@ namespace ConsoleApplication1
 
 
         //------------------------------------------
-        // Hàm tính tổng mảng không đệ qui
-        public static int SumArrayIterative(int n)
+        // Hàm tính tổng mảng đệ qui
+        static int SumArray(int[] array, int start, int end)
         {
-            int sum = 0;
-
-            for (int i = 1; i <= n; i++)
+            // Nếu chỉ còn một phần tử, trả về phần tử đó
+            if (start == end)
             {
-                sum += i;
+                return array[start];
             }
+            int mid = (start + end) / 2;
 
-            return sum;
+            // Tính tổng của nửa trái và nửa phải
+            int leftSum = SumArray(array, start, mid);
+            int rightSum = SumArray(array, mid + 1, end);
+
+            return leftSum + rightSum;
         }
 
-        // Hàm tính tổng mảng đệ qui
-        public static int SumArrayRecursive(int n)
+        // Hàm tính tổng mảng không đệ qui
+        public static int SumArrayRecursive(int[] array)
         {
-            if (n == 0)
-                return 0;
-            else
-                return n + SumArrayRecursive(n - 1);
+            int sum = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
+            return sum;
         }
     }
 }
